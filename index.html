@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Magic Number Guessing Game</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+
+<style>
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    text-align: center;
+    background: linear-gradient(135deg, #f8e1f4, #dff6ff);
+}
+
+.container {
+    max-width: 900px;
+    margin: auto;
+    padding: 30px;
+}
+
+h1 {
+    color: #2c3e50;
+    margin-bottom: 5px;
+}
+
+.subtitle {
+    color: #555;
+    margin-bottom: 20px;
+}
+
+.card-box {
+    background: white;
+    border-radius: 18px;
+    padding: 25px;
+    margin-top: 20px;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.1);
+    animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    font-weight: 600;
+    color: #34495e;
+}
+
+.numbers {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    gap: 8px;
+}
+
+.number {
+    background: #f9f9f9;
+    padding: 6px;
+    border-radius: 8px;
+    font-size: 13px;
+    border: 1px solid #e0e0e0;
+}
+
+.buttons {
+    margin-top: 20px;
+}
+
+button {
+    padding: 10px 22px;
+    margin: 8px;
+    border: none;
+    border-radius: 25px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.yes {
+    background: #4caf50;
+    color: white;
+}
+
+.no {
+    background: #e53935;
+    color: white;
+}
+
+.start-btn {
+    background: #6c63ff;
+    color: white;
+}
+
+.restart-btn {
+    background: #555;
+    color: white;
+}
+
+button:hover {
+    opacity: 0.85;
+}
+
+.result {
+    margin-top: 30px;
+    font-size: 22px;
+    font-weight: 600;
+    color: #2c3e50;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>Magic Number Guessing Game</h1>
+    <p class="subtitle">Think of a number between 1 and 100</p>
+    <button class="start-btn" onclick="startGame()">Start Game</button>
+
+    <div id="gameArea"></div>
+    <div id="result" class="result"></div>
+</div>
+
+<script>
+let card = 0;
+let result = 0;
+const totalCards = 7;
+
+function startGame() {
+    card = 0;
+    result = 0;
+    document.getElementById("result").innerHTML = "";
+    showCard();
+}
+
+function showCard() {
+    if (card >= totalCards) {
+        document.getElementById("gameArea").innerHTML = "";
+        document.getElementById("result").innerHTML =
+            "Your number is: " + result +
+            "<br><br><button class='restart-btn' onclick='startGame()'>Play Again</button>";
+        return;
+    }
+
+    let cardValue = Math.pow(2, card);
+    let numbersHTML = "";
+
+    for (let num = 1; num <= 100; num++) {
+        if ((num & cardValue) !== 0) {
+            numbersHTML += "<div class='number'>" + num + "</div>";
+        }
+    }
+
+    document.getElementById("gameArea").innerHTML =
+        "<div class='card-box'>" +
+        "<div class='card-header'>" +
+        "<span>Card " + (card + 1) + "</span>" +
+        "<span>" + (card + 1) + " of " + totalCards + "</span>" +
+        "</div>" +
+        "<div class='numbers'>" + numbersHTML + "</div>" +
+        "<div class='buttons'>" +
+        "<button class='yes' onclick='answerYes(" + cardValue + ")'>Yes</button>" +
+        "<button class='no' onclick='answerNo()'>No</button>" +
+        "</div>" +
+        "</div>";
+}
+
+function answerYes(value) {
+    result += value;
+    card++;
+    showCard();
+}
+
+function answerNo() {
+    card++;
+    showCard();
+}
+</script>
+
+</body>
+</html>
