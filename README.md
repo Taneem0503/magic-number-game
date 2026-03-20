@@ -21,7 +21,7 @@ Interactive web-based game that guesses any number you think of between 1–100 
 - Yes responses are added using bitwise logic to determine the final number
 
 ## Live Demo
-[Your GitHub Pages Link Here]
+https://taneem0503.github.io/magic-number-game/
 
 ## Tech Stack
 - HTML
